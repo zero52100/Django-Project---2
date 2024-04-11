@@ -1,0 +1,237 @@
+<!-- home.html -->
+{% include 'users/navbar.html' %}
+
+{% block content %}
+<style>
+    .product-box {
+        border: 1px solid #ccc;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        width: 350px;
+        height: 500px;
+        float: left; /* To make the boxes float side by side */
+        position: relative; /* Enable positioning context for absolute positioning */
+    }
+    .product {
+        margin-left: 25px;
+    }
+    .product-name {
+        font-weight: bold;
+        margin-top: 10px; /* Adjust as needed */
+    }
+    .product-price {
+        color: #00000;
+        margin-top: 5px;
+        font-weight: bold;
+        font-size: 19px;
+    }
+    .original-price {
+        text-decoration: line-through;
+        margin-left: 5px;
+        font-weight: normal;
+    }
+    .product-thumbnail-container {
+        max-height: 320px; /* Adjust as needed */
+        overflow: hidden;
+        text-align: center; /* Center the image */
+    }
+    .product-thumbnail {
+        max-width: 100%;
+        max-height: 100%; /* Ensure the image fits within the container */
+        height: auto;
+    }
+    .product-weight {
+        margin-top: 15px;
+        font-size:20px;
+        font-weight:bold
+    }
+    .discount_text {
+        color: #26a541;
+    }
+    .submit-row {
+        position: absolute;
+        bottom: 20px; /* Adjust as needed */
+        left: 50%; /* Align to the center */
+        transform: translateX(-50%); /* Center horizontally */
+    }
+    .submit-row .add {
+        background-color: green;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        display: inline-block; /* Make the button display inline with other elements */
+        text-decoration: none; /* Remove underline */
+        color: white; /* Button text color */
+    }
+    .product-link{
+        color:black;
+        text-decoration:none
+
+        
+    }
+    .product-link:hover{
+        color:#0275dd
+        
+    }
+    .submit-row .add i {
+        margin-right: 5px;
+        
+    }
+    .search-filter {
+        margin-left: 25px;
+        margin-bottom: 20px;
+    }
+    .search-filter form {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .search-filter input[type="text"],
+    .search-filter select {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-right: 10px;
+    }
+    .search-filter button {
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .categorynavbar {
+        background-color: #000000; /* Primary color */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        font-family: Helvetica;
+    }
+    .categorynavbar-brand {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .categorynavbar-nav {
+        display: flex;
+    }
+    .categorynav-item {
+        margin-right: 55px;
+    }
+    .categorynav-link {
+        color: #ffffff; 
+        text-decoration: none;
+        transition: color 0.3s;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .categorynav-link:hover {
+        color: #0275dd; /* Info color on hover */
+    }
+</style>
+
+
+<nav class="categorynavbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse categorynavbar-collapse" id="categoryNav">
+        <ul class="categorynavbar-nav ml-auto">
+            <li class="categorynav-item">
+                <a class="categorynav-link" href="{% url 'search_and_filter' %}?category=staples">Staples</a>
+            </li>
+            <li class="categorynav-item">
+                <a class="categorynav-link" href="{% url 'search_and_filter' %}?category=snacks_&_beverages">Snacks & Beverages</a>
+            </li>
+            <li class="categorynav-item">
+                <a class="categorynav-link" href="{% url 'search_and_filter' %}?category=household_items">Household Items</a>
+            </li>
+            <li class="categorynav-item">
+                <a class="categorynav-link" href="{% url 'search_and_filter' %}?category=dairy_and_eggs">Dairy & Eggs</a>
+            </li>
+        </ul>
+    </div>
+    
+</nav>
+<h1>Welcome to Your E-commerce Site</h1>
+{% if messages %}
+        {% for message in messages %}
+            {%if message.tags == 'error'%}
+            <div class="error-message"> <!-- Use the error-message class here -->
+                <p>{{ message }}</p>
+            </div>
+            {%elif message.tags == 'success'%}
+            <div class="success-message">
+                
+                    <p>{{ message }}</p>
+            
+            </div>
+            {%endif%}
+        {% endfor%}
+    {% endif %}
+    <div class="search-filter">
+        <form action="{% url 'search_and_filter' %}" method="GET">
+            <input class="searchbox" type="text" name="q" placeholder="Search products">
+            <select name="category">
+                <option value="" selected disabled>Select category</option>
+                <option value="staples">Staples</option>
+                <option value="snacks_&_beverages">Snacks and Beverages</option>
+                <option value="household_items">Household Items</option>
+                <option value="dairy_and_eggs">Dairy and Eggs</option>
+            </select>
+            <select name="discount_percentage">
+                <option value="" selected disabled>Select discount</option>
+                <option value="10ormore">10% Off or more</option>
+                <option value="35ormore">35% Off or more</option>
+                <option value="50ormore">50% Off or more</option>
+                <option value="60ormore">60% Off or more</option>
+                
+            </select>
+            <select name="available_quantity">
+                <option value="" selected disabled>Select availability</option>
+                <option value="in-stock">In Stock</option>
+                <option value="out-Of-stock">Out of stock</option>
+                
+            </select>
+            
+            <select name="sort_by">
+                <option value="" selected disabled>Sort by</option>
+                <option value="name_asc">Name (A to Z)</option>
+                <option value="name_desc">Name (Z to A)</option>
+                <option value="price_asc">Price (Low to High)</option>
+                <option value="price_desc">Price (High to Low)</option>
+            </select>
+            <button type="submit">Search & Filter</button>
+        </form>
+    </div>
+<div class="product">
+    
+    {% for product in product_list %}
+    
+    <div class="product-box">
+        <a href="{% url 'product_detail' product.id %}" class="product-link"> 
+        <ul>
+            <div class="product-thumbnail-container">
+                <img class="product-thumbnail" src="{{ product.thumbnail.url }}" alt="{{ product.name }} thumbnail">
+            </div>
+            <li class="product-name"><strong>{{ product }}</strong></li>
+            {% if product.discount_percentage != 0 %}
+                <li class="product-price">₹{{ product.discounted_price }} <span class="original-price">₹{{ product.price }}</span> <span class="discount_text"> ({{ product.discount_percentage }}% off)</span></li>
+            {% else %}
+                <li class="product-price">₹{{ product.price }}</li>
+            {% endif %}
+            <li class="product-weight">{{ product.weight }}{{ product.weight_unit }}</li>
+            <div class="submit-row">
+                <a href="{% url 'edit' product.id %}" class="add">
+                    <i class="fa fa-shopping-cart"></i> <!-- Chart icon -->
+                    <span style="color: white;">Add item</span>
+                </a>
+            </div>
+        </ul>
+    </div> 
+{% endfor %}
+
+</div>
+
+{% include 'users/footer.html' %}
+
+{% endblock %}

@@ -1,0 +1,143 @@
+{% include 'users/navbar.html' %}
+
+{% block content %}
+<style>
+    .product-box {
+        border: 1px solid #ccc;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        width: 350px; /* Adjust as needed */
+        float: left; /* To make the boxes float side by side */
+    }
+    .product-container {
+        display: flex;
+        align-items: flex-start;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        border: 3px solid #000000;
+        width: 95%;
+    }
+    .product-thumbnail {
+        width: 200px;
+        height: auto;
+        margin-right: 20px;
+    }
+    .product-details {
+        flex-grow: 1;
+        font-size:15px
+    }
+    .product-details ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .product-details li {
+        margin-bottom: 10px;
+    }
+    .product-details strong {
+        font-weight: bold;
+    }
+    .product-details .text {
+        margin-left:20px
+        
+    }
+    .submit-row {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .submit-row .edit {
+        background-color: yellow;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .submit-row .delete {
+        background-color: red;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .success-message {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        font-size: 20px;
+        width: 400px;
+        margin-left: 650px;
+        text-align: center;
+    }
+    .error-message {
+        background-color: #f8d7da; /* Red background color */
+        border-color: #f5c6cb;
+        color: #721c24; /* Red text color */
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        font-size: 20px;
+        width: 400px;
+        margin-left: 650px;
+        text-align: center;
+    }
+</style>
+
+<h1>Product list</h1>
+    
+<div class="product" >
+    {% if messages %}
+        {% for message in messages %}
+            {%if message.tags == 'error'%}
+            <div class="error-message"> <!-- Use the error-message class here -->
+                <p>{{ message }}</p>
+            </div>
+            {%elif message.tags == 'success'%}
+            <div class="success-message">
+                
+                    <p>{{ message }}</p>
+            
+            </div>
+            {%endif%}
+        {% endfor%}
+    {% endif %}
+{% for product in product_list %}
+    <div class="product-container"> 
+        <img class="product-thumbnail" src="{{ product.thumbnail.url }}" alt="{{ product.name }} thumbnail">
+        <div class="product-details">
+            <ul>
+                <li><strong>Name:</strong> {{ product.Product_name }}</li>
+                <li><strong>Brand:</strong> {{ product.brand_name }} </li>
+                <li><strong>MRP:</strong> {{ product.price }} </li>
+                <li>
+                    {% if product.discount_percentage != 0 %}
+                        <strong>Displayed Price:</strong> ₹{{ product.discounted_price }} <span class="text" ><strong>Discount: </strong>{{ product.discount_percentage }}% off</span>
+                        
+                    {% else %}
+                        <strong>Displayed Price:</strong> ₹{{ product.price }}
+                    {% endif %}
+                </li>
+                <li><strong>Available Quantity:</strong> {{ product.available_quantity }}</li>
+                <li><strong>Category:</strong> {{ product.get_category_display }}</li>
+                <li><strong>Weight:</strong> {{ product.weight }}{{ product.weight_unit }}</li>
+                <li><strong>Expiry:</strong> {{ product.expiry_date }}</li>
+            </ul>
+            
+            <div class="submit-row">
+                <a href="{% url 'edit' product.id %}" class="edit" >Edit</a>
+                <a href="{% url 'delete' product.id %}" class="delete" >Delete</a>
+               
+                
+            </div>
+            
+        </div>
+    </div> 
+{% endfor %}
+</div>
+
+{% include 'users/footer.html' %}
+
+{% endblock %}

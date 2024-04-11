@@ -1,0 +1,172 @@
+{% include 'users/navbar.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+<!-- Slick theme CSS (optional) -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Slick JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<style>
+    .product-container {
+        display: flex;
+        align-items: flex-start;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        width:20%%
+        
+    }
+    .image-box {
+        width: 25%; /* Adjust as needed */
+        border-right: 30px solid #000000;
+        padding: 10px;
+        border: 3px solid #000000;
+    }
+    
+    .image-thumbnail {
+        width: 70%;
+        height: auto;
+
+    }
+    .details-box {
+        flex-grow: 1;
+        padding: 20px;
+       
+    }
+    .details-box ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .details-box li {
+        margin-bottom: 10px;
+    }
+    .details-box strong {
+        font-weight: bold;
+    }
+    .details-box .text {
+        margin-left: 20px;
+    }
+    .breadcrumb {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+    .breadcrumb a {
+        text-decoration: none;
+        color: #000000;
+    }
+    .product-price {
+        color: #00000;
+        margin-top: 5px;
+        font-weight: bold;
+        font-size: 19px;
+    }
+    .original-price {
+        text-decoration: line-through;
+        margin-left: 5px;
+        font-weight: normal;
+        font-size:15px
+    }
+    .discount_text {
+        color: #26a541;
+    }
+    .thumbnail-images{
+        width:40%;
+    }
+    .thumbnail-image{
+        width:30%
+    }
+    .main-image {
+        width: 40%; /* Adjust as needed */
+       
+        border: 3px solid #000000;
+        padding: 1px;
+        margin-right:50px
+    }
+    .submit-row .add i {
+        margin-right: 5px;
+        
+    }
+    .submit-row {
+        position: absolute;
+        bottom: 320px; /* Adjust as needed */
+        right: 15%; /* Align to the center */
+        transform: translateX(-50%); /* Center horizontally */
+    }
+    .submit-row .add {
+        background-color: green;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        display: inline-block; /* Make the button display inline with other elements */
+        text-decoration: none; /* Remove underline */
+        color: white; /* Button text color */
+    }
+</style>
+
+<div class="breadcrumb">
+    <a href="{% url 'home' %}">Home</a> &gt;
+    <a >{{ product.get_category_display}}</a> &gt; 
+    <a href="{% url 'product_detail' product.id %}">{{ product.Product_name}}</a>
+</div>
+
+<div class="product-container">
+    
+    <div class="thumbnail-images">
+        {% for product_image in product_images %}
+        <li>
+        <img class="thumbnail-image" src="{{ product_image.image.url }}" alt="{{ product.name }} thumbnail" onclick="displayMainImage('{{ product_image.image.url }}')"></li>
+        {% endfor %}
+    </div>
+    <div class="main-image">
+        <img id="mainImage" class="image-thumbnail" src="{{ product.thumbnail.url }}" alt="{{ product.name }} thumbnail">
+    </div>
+    
+    
+    
+        
+   
+
+    <div class="details-box">
+        <ul>
+            <li style="font-size: 25px;"><strong>{{ product.Product_name }}</strong></li>
+
+            <li><strong>Brand:</strong> {{ product.brand_name }} </li>
+            
+            <li>
+                {% if product.discount_percentage != 0 %}
+                <li class="product-price">₹{{ product.discounted_price }} <span class="original-price">₹{{ product.price }}</span> <span class="discount_text"> {{ product.discount_percentage }}% off</span></li>
+            {% else %}
+                <li class="product-price">₹{{ product.price }}</li>
+            {% endif %}
+            </li>
+            
+            
+            <li><strong>Weight:</strong> {{ product.weight }}{{ product.weight_unit }}</li>
+            <li><strong>Expiry:</strong> {{ product.expiry_date }}</li>
+        </ul>
+        <div class="submit-row">
+            <a href="{% url 'add_to_cart' product.id %}" class="add">
+                <i class="fa fa-shopping-cart"></i> <!-- Chart icon -->
+                <span style="color: white;">Add item</span>
+            </a>
+        </div>
+    </div>
+    
+    
+</div>
+
+<div style="font-size: 20px ; margin-left:20px" ><strong>Description:</strong> {{ product.description }}</div>
+
+{% include 'users/footer.html' %}
+<script>
+    function displayMainImage(imageUrl) {
+        document.getElementById("mainImage").src = imageUrl;
+    }
+</script>
+{% endblock %}

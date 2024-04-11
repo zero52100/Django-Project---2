@@ -1,0 +1,112 @@
+{% include 'users/navbar.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #0275dd;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button[type="submit"]:hover {
+            background-color: #0252a3;
+        }
+        .success-message {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 20px;
+            width: 400px;
+            margin-left: 650px;
+            text-align: center;
+        }
+        .error-message {
+            background-color: #f8d7da; /* Red background color */
+            border-color: #f5c6cb;
+            color: #721c24; /* Red text color */
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 20px;
+            width: 400px;
+            margin-left: 650px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Add Product</h2>
+    {% if messages %}
+        {% for message in messages %}
+            {%if message.tags == 'error'%}
+            <div class="error-message"> <!-- Use the error-message class here -->
+                <p>{{ message }}</p>
+            </div>
+            {%elif message.tags == 'success'%}
+            <div class="success-message">
+                
+                    <p>{{ message }}</p>
+            
+            </div>
+            {%endif%}
+        {% endfor%}
+    {% endif %}
+    <!-- Add Product Form -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ formset.management_form }}
+    <fieldset>
+        <legend>Product Images</legend>
+        {{ formset.as_p }}
+    </fieldset>
+    <button type="submit">Submit</button>
+</form>
+
+
+</body>
+</html>
+
+
+{% include 'users/footer.html' %}
+
+{% endblock %}

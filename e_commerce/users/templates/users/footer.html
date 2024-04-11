@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Footer styles */
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .footer {
+            background-color: #000000;
+            padding: 20px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            color: #ffffff;
+            margin-top: auto;
+        }
+
+        .footer-menu {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px; /* Add margin to separate from social icons */
+        }
+
+        .footer-menu li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .footer-menu li:last-child {
+            margin-right: 0;
+        }
+
+        .footer-menu li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer-menu li a:hover {
+            color: #0275dd;
+        }
+
+        .footer-social a {
+            display: inline-block;
+            margin-right: 10px;
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <footer class="footer">
+        <div class="footer-menu">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="">Shop</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p>&copy; 2024 QuickCommerce. All rights reserved.</p>
+    </footer>
+</body>
+</html>

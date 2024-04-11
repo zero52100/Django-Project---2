@@ -1,0 +1,92 @@
+{% include 'users/navbar.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #0275dd;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button[type="submit"]:hover {
+            background-color: #0252a3;
+        }
+        .preview-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .preview-container img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit Product</h2>
+    <!-- Edit Product Form -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        {{ formset.management_form }}
+        <div class="preview-container">
+            <p>Product Image Preview:</p>
+            <img src="{{ product.thumbnail.url }}" alt="Product Thumbnail Preview">
+            
+           
+        </div>
+        <fieldset>
+            <legend>Product Images</legend>
+            {{ formset.as_p }}
+            <img src="{{ product.image.url }}" alt="Product Image Preview">
+            
+        </fieldset>
+        
+        
+        <!-- Preview Container for Image -->
+        
+        
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
+
+{% include 'users/footer.html' %}
+
+{% endblock %}

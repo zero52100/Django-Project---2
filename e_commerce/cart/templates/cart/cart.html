@@ -1,0 +1,61 @@
+{% load static %}   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        .success-message {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 20px;
+            width: 400px;
+            margin-left: 650px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    
+    {% include 'users/navbar.html' %}
+    {% if messages %}
+    {% for message in messages %}
+        {%if message.tags == 'error'%}
+        <div class="error-message"> <!-- Use the error-message class here -->
+            <p>{{ message }}</p>
+        </div>
+        {%elif message.tags == 'success'%}
+        <div class="success-message">
+            
+                <p>{{ message }}</p>
+        
+        </div>
+        {%endif%}
+    {% endfor%}
+{% endif %}
+    <div class="container">
+        <h1>Cart</h1>
+        {% if cart_items %}
+            <ul>
+                {% for item in cart_items %}
+                    <li>
+                        <strong>{{ item.product.name }}</strong>
+                        <span>Quantity: {{ item.quantity }}</span>
+                        <span>Price: {{ item.product.price }}</span>
+                        <!-- Add more details here if needed -->
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+    
+    {% include 'users/footer.html' %}
+</body>
+</html>
