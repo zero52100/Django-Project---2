@@ -4,6 +4,8 @@ from .models import Product,ProductImage
 from decimal import Decimal
 from django.contrib import messages
 from cart.models import Cart, CartItem
+from django.urls import reverse
+
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -52,18 +54,24 @@ def product_detail(request, pk):
     product_images = ProductImage.objects.filter(product=product)
     
     discounted_price = product.price - (product.price * product.discount_percentage / Decimal(100))
-    # Update product object with discounted price
+    
     product.discounted_price = discounted_price
     
     return render(request, 'products_app/product_detail.html', {'product': product, 'product_images': product_images})
 def add_to_cart(request, product_id):
     product = Product.objects.get(pk=product_id)
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-    if not created:
-        cart_item.quantity += 1
-        cart_item.save()
-        messages.success(request,"Cart updated")
+    if product.available_quantity >=1 :
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if not created:
+        
+            cart_item.quantity += 1
+            cart_item.save()
+            messages.success(request,"Cart updated")
+    else:
+            messages.error(request,"Out of stock")
+
+
     return redirect('view_cart')
 
 

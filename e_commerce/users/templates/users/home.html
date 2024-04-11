@@ -60,9 +60,9 @@
         padding: 10px 20px;
         cursor: pointer;
         border-radius: 5px;
-        display: inline-block; /* Make the button display inline with other elements */
-        text-decoration: none; /* Remove underline */
-        color: white; /* Button text color */
+        display: inline-block; 
+        text-decoration: none; 
+        color: white; 
     }
     .product-link{
         color:black;
@@ -103,7 +103,7 @@
     }
     
     .categorynavbar {
-        background-color: #000000; /* Primary color */
+        background-color: #000000; 
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -128,7 +128,7 @@
         font-weight: bold;
     }
     .categorynav-link:hover {
-        color: #0275dd; /* Info color on hover */
+        color: #0275dd;
     }
 </style>
 
@@ -156,7 +156,7 @@
 {% if messages %}
         {% for message in messages %}
             {%if message.tags == 'error'%}
-            <div class="error-message"> <!-- Use the error-message class here -->
+            <div class="error-message"> 
                 <p>{{ message }}</p>
             </div>
             {%elif message.tags == 'success'%}
@@ -221,8 +221,8 @@
             {% endif %}
             <li class="product-weight">{{ product.weight }}{{ product.weight_unit }}</li>
             <div class="submit-row">
-                <a href="{% url 'edit' product.id %}" class="add">
-                    <i class="fa fa-shopping-cart"></i> <!-- Chart icon -->
+                <a href="{% url 'add_to_cart' product.id %}" class="add">
+                    <i class="fa fa-shopping-cart"></i> 
                     <span style="color: white;">Add item</span>
                 </a>
             </div>

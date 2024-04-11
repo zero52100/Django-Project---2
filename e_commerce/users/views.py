@@ -16,15 +16,15 @@ def home(request):
     
     
     for product in product_list:
-        # Calculate discounted price
+        
         discounted_price = product.price - (product.price * product.discount_percentage / Decimal(100))
-        # Update product object with discounted price
+        
         product.discounted_price = discounted_price
     return render(request, 'users/home.html',{'product_list':product_list})
 def search_and_filter_products(request):
     product_list = Product.objects.all()
     
-    # Handle search functionality
+   
     query = request.GET.get('q')
     if query:
         product_list = product_list.filter(
@@ -33,7 +33,7 @@ def search_and_filter_products(request):
             Q(brand_name__icontains=query)
         )
     
-    # Handle filter functionality
+    
     category = request.GET.get('category')
     discount_percentage = request.GET.get('discount_percentage')
     available_quantity=request.GET.get('available_quantity')
@@ -87,7 +87,7 @@ def contact(request):
                 message=form.cleaned_data['message']
             )
             contact_message.save()
-            return redirect('home.html')  # Redirect to a success page
+            return redirect('home.html')  
     else:
         form = ContactForm()
     return render(request, 'users/contact.html', {'form': form})
@@ -107,7 +107,7 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False  # User is not active until OTP verification
+            user.is_active = False 
             otp = generate_otp()
             user.set_password(form.cleaned_data['password'])
             user.save()
@@ -202,7 +202,7 @@ def set_password(request):
                     user.save()
                     return redirect('login')
                 except CustomUser.DoesNotExist:
-                    pass  # Handle the case where the user doesn't exist
+                    pass  
     else:
         form = SetPasswordForm()
     return render(request, 'users/set_password.html', {'form': form})

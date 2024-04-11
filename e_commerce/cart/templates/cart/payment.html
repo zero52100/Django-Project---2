@@ -33,7 +33,7 @@
             flex-grow: 1;
         }
         .error-message {
-            background-color: #f8d7da; 
+            background-color: #f8d7da;
             border-color: #f5c6cb;
             color: #721c24;
             padding: 10px;
@@ -82,39 +82,8 @@
     {% endfor%}
 {% endif %}
 <div class="container">
-    <h1>Cart</h1>
-    {% if cart_items %}
-        <ul>
-            {% for item in cart_items %}
-                <li class="cart-item">
-                    <img src="{{ item.product.thumbnail.url }}" alt="{{ item.product.name }} thumbnail">
-                    <div class="cart-item-details">
-                        <strong>{{ item.product.name }}</strong>
-                        <p>Price: {{ item.product.price }}</p>
-                        {% if item.product.discount_percentage != 0 %}
-                        <p>Discount:{{item.product.discount_percentage}} % off</p>
-                        {% endif %}
-                        <p>Quantity: 
-                            <a href="{% url 'decrement_item' item.id %}"><i class="fas fa-minus"></i></a>
-                            {{ item.quantity }}
-                            <a href="{% url 'increment_item' item.id %}"><i class="fas fa-plus"></i></a>
-                        </p>
-                        <p>Total: {{ item.total_price }}</p>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-        <p><strong>Total Amount: {{ overall_total }}</strong></p>
-        <div class="submit-row">
-            <a href="{% url 'checkout' %}" class="add">
-                <i class="fa fa-shopping-cart"></i> 
-                <span style="color: white;">Proceed To Buy</span>
-            </a>
-        </div>
-        
-    {% else %}
-        <p>Your cart is empty.</p>
-    {% endif %}
+    <h1>Payment</h1>
+    
     
     
 </div>

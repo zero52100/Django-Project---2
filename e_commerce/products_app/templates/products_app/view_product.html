@@ -6,8 +6,8 @@
         border: 1px solid #ccc;
         margin-right: 20px;
         margin-bottom: 20px;
-        width: 350px; /* Adjust as needed */
-        float: left; /* To make the boxes float side by side */
+        width: 350px; 
+        float: left; 
     }
     .product-container {
         display: flex;
@@ -73,9 +73,9 @@
         text-align: center;
     }
     .error-message {
-        background-color: #f8d7da; /* Red background color */
+        background-color: #f8d7da;
         border-color: #f5c6cb;
-        color: #721c24; /* Red text color */
+        color: #721c24;
         padding: 10px;
         border-radius: 4px;
         margin-bottom: 15px;
@@ -92,7 +92,7 @@
     {% if messages %}
         {% for message in messages %}
             {%if message.tags == 'error'%}
-            <div class="error-message"> <!-- Use the error-message class here -->
+            <div class="error-message"> 
                 <p>{{ message }}</p>
             </div>
             {%elif message.tags == 'success'%}

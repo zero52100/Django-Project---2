@@ -2,11 +2,8 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-<!-- Slick theme CSS (optional) -->
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-<!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Slick JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
 <style>
@@ -20,7 +17,7 @@
         
     }
     .image-box {
-        width: 25%; /* Adjust as needed */
+        width: 25%;
         border-right: 30px solid #000000;
         padding: 10px;
         border: 3px solid #000000;
@@ -81,7 +78,7 @@
         width:30%
     }
     .main-image {
-        width: 40%; /* Adjust as needed */
+        width: 40%; 
        
         border: 3px solid #000000;
         padding: 1px;
@@ -93,9 +90,9 @@
     }
     .submit-row {
         position: absolute;
-        bottom: 320px; /* Adjust as needed */
-        right: 15%; /* Align to the center */
-        transform: translateX(-50%); /* Center horizontally */
+        bottom: 320px; 
+        right: 15%; 
+        transform: translateX(-50%);
     }
     .submit-row .add {
         background-color: green;
@@ -103,9 +100,9 @@
         padding: 10px 20px;
         cursor: pointer;
         border-radius: 5px;
-        display: inline-block; /* Make the button display inline with other elements */
-        text-decoration: none; /* Remove underline */
-        color: white; /* Button text color */
+        display: inline-block; 
+        text-decoration: none; 
+        color: white; 
     }
 </style>
 
@@ -152,7 +149,7 @@
         </ul>
         <div class="submit-row">
             <a href="{% url 'add_to_cart' product.id %}" class="add">
-                <i class="fa fa-shopping-cart"></i> <!-- Chart icon -->
+                <i class="fa fa-shopping-cart"></i> 
                 <span style="color: white;">Add item</span>
             </a>
         </div>
