@@ -31,7 +31,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     pincode = models.IntegerField(blank=True, null=True)  # Change to IntegerField
 
     address = models.TextField(max_length=500, blank=True)
-
+    otp = models.IntegerField(blank=True, null=True)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'

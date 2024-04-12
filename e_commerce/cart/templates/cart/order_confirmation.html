@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .order-details {
+            margin-top: 20px;
+        }
+        .order-item {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .product-name {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        <p>Dear {{ order.user.full_name }},</p>
+        <p>Your order with the following details has been successfully placed:</p>
+        {% for order in orders %}
+    <div class="order-box">
+        <strong>Order ID:</strong> {{ order.id }}<br>
+        <strong>Total Price:</strong> {{ order.total_price }}<br>
+        <strong>Status:</strong> {{ order.order_status }}<br>
+        
+        <ul>
+            {% for order_item in order.orderitem_set.all %}
+            <li>
+                <strong>Product:</strong> {{ order_item.product.Product_name }}<br>
+                <strong>Quantity:</strong> {{ order_item.quantity }}<br>
+                <strong>Price:</strong> {{ order_item.product.price }}<br>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+        <div class="order-details">
+            <p><strong>Order ID:</strong> {{ order.id }}</p>
+            <p><strong>Total Price:</strong> {{ order.total_price }}</p>
+            <p><strong>Order Status:</strong> {{ order.order_status }}</p>
+            <h2>Order Items:</h2>
+            <ul>
+                {% for order_item in order.orderitem_set.all %}
+                <li>
+                    <strong>Product:</strong> {{ order_item.product.Product_name }}<br>
+                    <strong>Quantity:</strong> {{ order_item.quantity }}<br>
+                    <strong>Price:</strong> {{ order_item.product.price }}<br>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

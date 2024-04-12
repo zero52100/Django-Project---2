@@ -4,48 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
+    <title>Payment</title>
     <style>
-        .success-message {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            color: #155724;
+        /* Styles for success and error messages */
+        /* You can keep the existing styles for messages if needed */
+
+        .payment-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .payment-form input[type="text"],
+        .payment-form input[type="email"],
+        .payment-form input[type="number"],
+        .payment-form select {
+            width: 100%;
             padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-size: 20px;
-            width: 400px;
-            margin-left: 650px;
-            text-align: center;
+            margin: 5px 0;
+            box-sizing: border-box;
         }
-        .cart-item {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
+
+        .payment-form button[type="submit"] {
+            background-color: #0275dd;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
         }
-        .cart-item img {
-            width: 100px; 
-            margin-right: 20px;
-        }
-        .cart-item-details {
-            flex-grow: 1;
-        }
-        .error-message {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-size: 20px;
-            width: 400px;
-            margin-left: 650px;
-            text-align: center;
-        }
-        
-        
         .submit-row .add {
             background-color: #0275dd;
             border: none;
@@ -60,34 +46,33 @@
 
 
         }
-        
     </style>
 </head>
 <body>
-    
     {% include 'users/navbar.html' %}
-    {% if messages %}
-    {% for message in messages %}
-        {%if message.tags == 'error'%}
-        <div class="error-message"> 
-            <p>{{ message }}</p>
+    <div class="container">
+        <h1>Payment</h1>
+        <div class="container">
+            <h1>Payment</h1>
+            <form class="payment-form" method="post" action="{% url 'process_order' %}">
+                {% csrf_token %}
+                <label for="payment_type">Select Payment Method:</label>
+                <select name="payment_type" id="payment_type">
+                    <option value="debit_card">Debit Card</option>
+                    <option value="upi">UPI</option>
+                </select>
+                
+                <div class="submit-row">
+                    <button type="submit" class="add">
+                        <i class="fa fa-shopping-cart"></i> 
+                        <span style="color: white;">Proceed</span>
+                    </button>
+                </div>
+            </form>
         </div>
-        {%elif message.tags == 'success'%}
-        <div class="success-message">
-            
-                <p>{{ message }}</p>
-        
-        </div>
-        {%endif%}
-    {% endfor%}
-{% endif %}
-<div class="container">
-    <h1>Payment</h1>
-    
-    
-    
-</div>
-    
+    </div>
     {% include 'users/footer.html' %}
+    
+    
 </body>
 </html>

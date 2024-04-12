@@ -1,0 +1,119 @@
+{% include 'users/navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        .order-box {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        strong {
+            font-weight: bold;
+        }
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .success-message {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 20px;
+            width: 400px;
+            margin-left: 650px;
+            text-align: center;
+        }
+        .error-message {
+            background-color: #f8d7da; 
+            border-color: #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 20px;
+            width: 400px;
+            margin-left: 650px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Orders</h1>
+    {% if orders %}
+    {% for message in messages %}
+        <div class="{% if message.tags == 'error' %}error-message{% elif message.tags == 'success' %}success-message{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
+        {% for order in orders %}
+        <div class="order-box">
+            <strong>Order ID:</strong> {{ order.id }}<br>
+            <strong>Total Price:</strong> {{ order.total_price }}<br>
+            <strong>Status:</strong> {{ order.order_status }}<br>
+            <ul>
+                {% for order_item in order.orderitem_set.all %}
+                    <li>
+                        <strong>Product:</strong> {{ order_item.product.Product_name }}<br>
+                        <strong>Quantity:</strong> {{ order_item.quantity }}<br>
+                        <strong>Price:</strong> {{ order_item.product.price }}<br>
+                        {% if not order_item.review %}
+                            <form method="post" action="{% url 'submit_review' order_item.id %}">
+                                {% csrf_token %}
+                                <label for="review_{{ order_item.id }}">Your Review:</label><br>
+                                <textarea id="review_{{ order_item.id }}" name="review"></textarea><br>
+                                <label for="rating_{{ order_item.id }}">Your Rating:(rate from 1 to 5)</label><br>
+                                <input type="number" id="rating_{{ order_item.id }}" name="rating" min="1" max="5" required><br>
+                                <button type="submit">Submit Review</button>
+                            </form>
+                        {% else %}
+                            <strong>Review:</strong> {{ order_item.review }}<br>
+                            <strong>Rating:</strong> {{ order_item.rating }}<br>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No orders found. Start shopping now!</p>
+    {% endif %}
+
+
+</body>
+</html>

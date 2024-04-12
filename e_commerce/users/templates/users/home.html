@@ -221,10 +221,16 @@
             {% endif %}
             <li class="product-weight">{{ product.weight }}{{ product.weight_unit }}</li>
             <div class="submit-row">
+                {% if user.is_authenticated %}
                 <a href="{% url 'add_to_cart' product.id %}" class="add">
                     <i class="fa fa-shopping-cart"></i> 
                     <span style="color: white;">Add item</span>
                 </a>
+                {% else %}
+                <a href="{% url 'login' %}" class="add">
+                    <i class="fa fa-shopping-cart"></i> 
+                    <span style="color: white;">Add item</span>
+                {% endif %}
             </div>
         </ul>
     </div> 

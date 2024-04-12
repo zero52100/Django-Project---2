@@ -30,7 +30,7 @@ class Product(models.Model):
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     weight = models.DecimalField(max_digits=10, decimal_places=2)
     weight_unit = models.CharField(max_length=10, choices=WEIGHT_CHOICES, default='kg')
-    
+    average_rating = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
     expiry_date = models.DateField(default=timezone.now)
 
     def __str__(self):

@@ -1,0 +1,64 @@
+{% include 'users/navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Administration</title>
+</head>
+<body>
+    <h1>Order Administration</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Total Price</th>
+                <th>Order details</th>
+                <th>Status</th>
+                <th>Action</th> <!-- New column for delete button -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.user.full_name }}</td>
+                <td>{{ order.total_price }}</td>
+                
+                <td>{% for order_item in order.orderitem_set.all %}
+                    <li>
+                        <strong>Product:</strong> {{ order_item.product.Product_name }}<br>
+                        <strong>Quantity:</strong> {{ order_item.quantity }}<br>
+                        <strong>Price:</strong> {{ order_item.product.price }}<br>
+                        
+                        {% if order_item.review %}
+                            <strong>Review:</strong> {{ order_item.review }}<br>
+                            <strong>Rating:</strong> {{ order_item.rating }}<br>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'update_order_status' order.id %}">
+                        {% csrf_token %}
+                        <select name="new_status">
+                            <option value="Pending" {% if order.order_status == 'Pending' %} selected {% endif %}>Pending</option>
+                            <option value="Shipped" {% if order.order_status == 'Shipped' %} selected {% endif %}>Shipped</option>
+                            <option value="Delivered" {% if order.order_status == 'Delivered' %} selected {% endif %}>Delivered</option>
+                        </select>
+                        <button type="submit">Update Status</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="{% url 'delete_order' order.id %}"> <!-- Form to handle delete action -->
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
